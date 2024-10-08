@@ -1,0 +1,52 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+#periodic-table {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.element {
+    width: 100px;
+    height: 100px;
+    margin: 5px;
+    padding: 10px;
+    background-color: lightblue;
+    border: 1px solid black;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.element:hover {
+    transform: scale(1.1);
+}
+
+#result-box {
+    margin-top: 20px;
+}
+
+.hidden {
+    display: none;
+}
+
+.correct {
+    background-color: lightgreen;
+}
+
+.wrong {
+    background-color: lightcoral;
+}
+
+#score-board {
+    font-size: 18px;
+    margin-bottom: 20px;
+}
