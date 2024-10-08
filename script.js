@@ -1,3 +1,4 @@
+
 // Element data for first 4 elements
 const elementsData = [
     { symbol: 'H', name: 'Hydrogen', atomicNumber: 1, atomicMass: 1.008, group: 1 },
