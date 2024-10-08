@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,12 +8,12 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    
-    <h1>Periodic Table Adventure</h1>
-    <div id="score-board">Score: <span id="score">0</span> | Lifelines: <span id="lifelines">3</span></div>
+    <canvas id="background-canvas"></canvas>
+    <h1>Guess The Element</h1>
+    <div id="score-board"><b>Score: </b><span id="score">0</span> |<b>Chances: </b><span id="lifelines">3</span></div>
     
     <div id="question-box">
-        <h2>Guess the Element by the following hints:</h2>
+        <h2>Guess the Element by the following CLues:</h2>
         <p>Atomic Number: <span id="atomic-number"></span></p>
         <p>Atomic Mass: <span id="atomic-mass"></span></p>
         <p>Group Number: <span id="group-number"></span></p>
@@ -26,6 +27,7 @@
         <p id="result-message"></p>
         <button id="next-hint" class="hidden">Next Hint</button>
         <button id="play-again" class="hidden">Play Again</button>
+        
     </div>
 
     <script src="script.js"></script>

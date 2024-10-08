@@ -1,11 +1,20 @@
 
+
 // Element data for first 4 elements
 const elementsData = [
     { symbol: 'H', name: 'Hydrogen', atomicNumber: 1, atomicMass: 1.008, group: 1 },
     { symbol: 'He', name: 'Helium', atomicNumber: 2, atomicMass: 4.0026, group: 18 },
     { symbol: 'Li', name: 'Lithium', atomicNumber: 3, atomicMass: 6.94, group: 1 },
     { symbol: 'Be', name: 'Beryllium', atomicNumber: 4, atomicMass: 9.0122, group: 2 },
-    { symbol: 'C', name: 'carbon', atomicNumber: 12, atomicMass: 12, group: 12 }
+    { symbol: 'B', name: 'Boron', atomicNumber: 6, atomicMass: 10.81, group: 13 },
+    { symbol: 'C', name: 'Carbon', atomicNumber: 6, atomicMass: 12.011, group: 14 },
+    { symbol: 'N', name: 'Nitrogen', atomicNumber: 6, atomicMass: 14.007, group:15  },
+    { symbol: 'O', name: 'Oxygen', atomicNumber: 6, atomicMass: 15.999, group: 16 },
+    { symbol: 'F', name: 'Fluorine', atomicNumber: 6, atomicMass: 18.984, group: 17 },
+    { symbol: 'Ne', name: 'Neon', atomicNumber: 10, atomicMass:20.180 , group: 18 },
+    { symbol: 'Na', name: 'Sodium', atomicNumber: 11, atomicMass: 23.0, group: 1 },
+    { symbol: 'Mg', name: 'Magnesuim', atomicNumber: 12, atomicMass: 24.304, group: 2 }
+    
 ];
 
 // DOM elements
@@ -28,36 +37,153 @@ let lifelines = 3;
 function createPeriodicTable() {
     elementsData.forEach(element => {
         const elementDiv = document.createElement('div');
+        const canvas = document.getElementById('background-canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        
+        // Function to generate random colors
+        function getRandomColor() {
+            const letters = '0123456789ABCDEF';
+            let color = '#';
+            for (let i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+        
+        // Particle class
+        class Particle {
+            constructor(x, y) {
+                this.x = x;
+                this.y = y;
+                this.radius = Math.random() * 5 + 5; 
+                this.color = getRandomColor();
+                this.speedX = (Math.random() - 0.5) * 2;
+                this.speedY = (Math.random() - 0.5) * 2; 
+            }
+        
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+        
+                
+                if (Math.random() < 0.01) {
+                    this.color = getRandomColor();
+                }
+        
+                
+                if (this.x < 0) this.x = canvas.width;
+                if (this.x > canvas.width) this.x = 0;
+                if (this.y < 0) this.y = canvas.height;
+                if (this.y > canvas.height) this.y = 0;
+            }
+        
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fillStyle = this.color;
+                ctx.fill();
+                ctx.closePath();
+            }
+        }
+        
+        // Create particles
+        const particles = [];
+        for (let i = 0; i < 100; i++) { 
+            const x = Math.random() * canvas.width;
+            const y = Math.random() * canvas.height;
+            particles.push(new Particle(x, y));
+        }
+        
+        // Function to animate the particles
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height); 
+            particles.forEach(particle => {
+                particle.update();
+                particle.draw();
+            });
+            requestAnimationFrame(animateParticles); 
+        }
+        
+        
+        animateParticles();
+
         elementDiv.classList.add('element');
         elementDiv.innerHTML = `<strong>${element.symbol}</strong><br>${element.name}`;
-        elementDiv.addEventListener('click', () => handleElementClick(element));
+        elementDiv.addEventListener('click', () => handleElementClick(element, elementDiv));
         periodicTable.appendChild(elementDiv);
     });
 }
 
 // Function to handle when an element is clicked
-function handleElementClick(element) {
-    if (lifelines === 0) return; // Game over, no further clicks allowed
+function handleElementClick(element, elementDiv) {
+    if (lifelines === 0) return;
+
+    animateClick(elementDiv); 
 
     if (element === currentElement) {
         resultMessage.textContent = 'Correct!';
-        resultBox.classList.remove('hidden');
-        resultBox.classList.add('correct');
-        nextHintBtn.classList.remove('hidden');
+        showResultBox('correct');
         score++;
-        scoreDisplay.textContent = score;
+        updateScoreDisplay();
     } else {
         resultMessage.textContent = 'Wrong! Try again!';
-        resultBox.classList.remove('hidden');
-        resultBox.classList.remove('correct');
-        resultBox.classList.add('wrong');
-        nextHintBtn.classList.remove('hidden');
+        showResultBox('wrong');
         lifelines--;
         lifelinesDisplay.textContent = lifelines;
         if (lifelines === 0) {
             gameOver();
         }
     }
+}
+
+// Function to animate the clicked element
+function animateClick(element) {
+    element.animate([
+        { transform: 'scale(1.2)', backgroundColor: 'yellow' }, 
+        { transform: 'scale(1)' } 
+    ], {
+        duration: 300,
+        easing: 'ease-in-out',
+        iterations: 1
+    });
+}
+
+// Function to show the result box with animation
+function showResultBox(type) {
+    resultBox.classList.remove('hidden');
+    resultBox.classList.add(type);
+    
+    // Animation for the result box with bounce effect
+    resultBox.animate([
+        { transform: 'translateY(-20px)', opacity: 0 },
+        { transform: 'translateY(0)', opacity: 1 }
+    ], {
+        duration: 400,
+        easing: 'ease-out',
+        fill: 'forwards'
+    });
+    
+    nextHintBtn.classList.remove('hidden');
+}
+
+// Function to update the score display with animation
+function updateScoreDisplay() {
+    scoreDisplay.textContent = score;
+    animateScoreChange(scoreDisplay);
+}
+
+// Function to animate score/lifelines change
+function animateScoreChange(element) {
+    element.animate([
+        { transform: 'scale(1.2)' },
+        { transform: 'scale(1)' }
+    ], {
+        duration: 300,
+        easing: 'ease-in-out',
+        iterations: 1
+    });
 }
 
 // Function to generate a random question
@@ -69,7 +195,7 @@ function generateQuestion() {
     atomicMassDisplay.textContent = currentElement.atomicMass;
     groupNumberDisplay.textContent = currentElement.group;
 
-    resultBox.classList.add('hidden');  // Hide the result box for the next round
+    resultBox.classList.add('hidden'); 
 }
 
 // Retry functionality for next hint
@@ -78,13 +204,13 @@ nextHintBtn.addEventListener('click', () => {
     generateQuestion();
 });
 
-// Game over logic
 function gameOver() {
     resultMessage.textContent = 'Game Over! Your score: ' + score;
-    resultBox.classList.remove('hidden');
-    playAgainBtn.classList.remove('hidden');
-    nextHintBtn.classList.add('hidden');
+    resultBox.classList.remove('hidden');  
+    playAgainBtn.classList.remove('hidden');  
+    nextHintBtn.classList.add('hidden');  
 }
+
 
 // Restart game functionality
 playAgainBtn.addEventListener('click', () => {
@@ -92,9 +218,11 @@ playAgainBtn.addEventListener('click', () => {
     lifelines = 3;
     scoreDisplay.textContent = score;
     lifelinesDisplay.textContent = lifelines;
-    playAgainBtn.classList.add('hidden');
-    generateQuestion();
+    playAgainBtn.classList.add('hidden');  
+    resultBox.classList.add('hidden');  
+    generateQuestion();  
 });
+
 
 // Initialize the game
 createPeriodicTable();
