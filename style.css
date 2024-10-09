@@ -18,7 +18,8 @@ body{
     z-index: -1; }
 
 #periodic-table {
-    display: flex;
+    display: flex
+    ;
     justify-content: center;
     margin-top: 20px;
 }
