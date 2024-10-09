@@ -2,18 +2,23 @@
 
 // Element data for first 4 elements
 const elementsData = [
-    { symbol: 'H', name: 'Hydrogen', atomicNumber: 1, atomicMass: 1.008, group: 1 },
-    { symbol: 'He', name: 'Helium', atomicNumber: 2, atomicMass: 4.0026, group: 18 },
-    { symbol: 'Li', name: 'Lithium', atomicNumber: 3, atomicMass: 6.94, group: 1 },
-    { symbol: 'Be', name: 'Beryllium', atomicNumber: 4, atomicMass: 9.0122, group: 2 },
-    { symbol: 'B', name: 'Boron', atomicNumber: 5, atomicMass: 10.81, group: 13 },
-    { symbol: 'C', name: 'Carbon', atomicNumber: 6, atomicMass: 12.011, group: 14 },
-    { symbol: 'N', name: 'Nitrogen', atomicNumber: 7, atomicMass: 14.007, group:15  },
     { symbol: 'O', name: 'Oxygen', atomicNumber: 8, atomicMass: 15.999, group: 16 },
-    { symbol: 'F', name: 'Fluorine', atomicNumber: 9, atomicMass: 18.984, group: 17 },
+    { symbol: 'He', name: 'Helium', atomicNumber: 2, atomicMass: 4.0026, group: 18 },
     { symbol: 'Ne', name: 'Neon', atomicNumber: 10, atomicMass:20.180 , group: 18 },
-    { symbol: 'Na', name: 'Sodium', atomicNumber: 11, atomicMass: 23.0, group: 1 },
-    { symbol: 'Mg', name: 'Magnesuim', atomicNumber: 12, atomicMass: 24.304, group: 2 }
+    { symbol: 'Li', name: 'Lithium', atomicNumber: 3, atomicMass: 6.94, group: 1 },
+    { symbol: 'H', name: 'Hydrogen', atomicNumber: 1, atomicMass: 1.008, group: 1 },
+    { symbol: 'Be', name: 'Beryllium', atomicNumber: 4, atomicMass: 9.0122, group: 2 },
+    { symbol: 'F', name: 'Fluorine', atomicNumber: 9, atomicMass: 18.984, group: 17 },
+    { symbol: 'C', name: 'Carbon', atomicNumber: 6, atomicMass: 12.011, group: 14 },
+    { symbol: 'Mg', name: 'Magnesuim', atomicNumber: 12, atomicMass: 24.304, group: 2 },
+    { symbol: 'B', name: 'Boron', atomicNumber: 5, atomicMass: 10.81, group: 13 },
+    { symbol: 'N', name: 'Nitrogen', atomicNumber: 7, atomicMass: 14.007, group:15  },
+    { symbol: 'Na', name: 'Sodium', atomicNumber: 11, atomicMass: 23.0, group: 1 }
+    
+   
+    
+    
+    
     
 ];
 
