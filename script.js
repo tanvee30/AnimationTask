@@ -42,7 +42,7 @@ function createPeriodicTable() {
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
         
-        // Function to generate random colors
+        // Random colors
         function getRandomColor() {
             const letters = '0123456789ABCDEF';
             let color = '#';
@@ -87,6 +87,9 @@ function createPeriodicTable() {
                 ctx.closePath();
             }
         }
+
+
+
         
         // Create particles
         const particles = [];
@@ -95,8 +98,12 @@ function createPeriodicTable() {
             const y = Math.random() * canvas.height;
             particles.push(new Particle(x, y));
         }
+
+
+
+
         
-        // Function to animate the particles
+        // Animations
         function animateParticles() {
             ctx.clearRect(0, 0, canvas.width, canvas.height); 
             particles.forEach(particle => {
@@ -104,23 +111,25 @@ function createPeriodicTable() {
                 particle.draw();
             });
             requestAnimationFrame(animateParticles); 
+
         }
         
         
         animateParticles();
 
         elementDiv.classList.add('element');
+        
         elementDiv.innerHTML = `<strong>${element.symbol}</strong><br>${element.name}`;
-        elementDiv.addEventListener('click', () => handleElementClick(element, elementDiv));
+        elementDiv.addEventListener('click', () => ElementClick(element, elementDiv));
         periodicTable.appendChild(elementDiv);
     });
 }
 
-// Function to handle when an element is clicked
-function handleElementClick(element, elementDiv) {
+// Function when an element is clicked
+function ElementClick(element, elementDiv) {
     if (lifelines === 0) return;
 
-    animateClick(elementDiv); 
+    
 
     if (element === currentElement) {
         resultMessage.textContent = 'Correct!';
@@ -138,53 +147,25 @@ function handleElementClick(element, elementDiv) {
     }
 }
 
-// Function to animate the clicked element
-function animateClick(element) {
-    element.animate([
-        { transform: 'scale(1.2)', backgroundColor: 'yellow' }, 
-        { transform: 'scale(1)' } 
-    ], {
-        duration: 300,
-        easing: 'ease-in-out',
-        iterations: 1
-    });
-}
 
-// Function to show the result box with animation
+
+//Function to show results
 function showResultBox(type) {
     resultBox.classList.remove('hidden');
     resultBox.classList.add(type);
     
-    // Animation for the result box with bounce effect
-    resultBox.animate([
-        { transform: 'translateY(-20px)', opacity: 0 },
-        { transform: 'translateY(0)', opacity: 1 }
-    ], {
-        duration: 400,
-        easing: 'ease-out',
-        fill: 'forwards'
-    });
+    
     
     nextHintBtn.classList.remove('hidden');
 }
 
-// Function to update the score display with animation
+// Function to update the score 
 function updateScoreDisplay() {
     scoreDisplay.textContent = score;
-    animateScoreChange(scoreDisplay);
+    
 }
 
-// Function to animate score/lifelines change
-function animateScoreChange(element) {
-    element.animate([
-        { transform: 'scale(1.2)' },
-        { transform: 'scale(1)' }
-    ], {
-        duration: 300,
-        easing: 'ease-in-out',
-        iterations: 1
-    });
-}
+
 
 // Function to generate a random question
 function generateQuestion() {
@@ -195,10 +176,12 @@ function generateQuestion() {
     atomicMassDisplay.textContent = currentElement.atomicMass;
     groupNumberDisplay.textContent = currentElement.group;
 
-    resultBox.classList.add('hidden'); 
+   
+   
+    resultBox.classList.add('hidden')
 }
 
-// Retry functionality for next hint
+// Retry functiona for next hint
 nextHintBtn.addEventListener('click', () => {
     nextHintBtn.classList.add('hidden');
     generateQuestion();
@@ -212,7 +195,7 @@ function gameOver() {
 }
 
 
-// Restart game functionality
+// Restart game 
 playAgainBtn.addEventListener('click', () => {
     score = 0;
     lifelines = 3;
@@ -224,6 +207,6 @@ playAgainBtn.addEventListener('click', () => {
 });
 
 
-// Initialize the game
+// Start the game
 createPeriodicTable();
 generateQuestion();
